@@ -3,6 +3,11 @@ import styled from "styled-components";
 import tw from "twin.macro";
 
 import CarLogoImg from "../../../assets/images/car-logo.png";
+import CarLogoDarkImg from "../../../assets/images/car-logo-dark.png";
+
+interface ILogoProps {
+  color?: "white" | "dark";
+}
 
 const LogoContainer = styled.div`
   ${tw`
@@ -19,6 +24,7 @@ const LogoText = styled.div`
     text-black
     m-1
     `}
+  ${({ color }: any) => (color === "white" ? tw`text-white` : tw`text-black`)}
 `;
 
 const Image = styled.div`
@@ -34,13 +40,18 @@ const Image = styled.div`
   }
 `;
 
-const Logo = () => {
-  return <LogoContainer>
+const Logo = (props: ILogoProps) => {
+  return (
+    <LogoContainer>
       <Image>
-          <img src={CarLogoImg} alt="carLogo" />
+        <img
+          src={props.color !== "white" ? CarLogoImg : CarLogoDarkImg}
+          alt="carLogo"
+        />
       </Image>
-      <LogoText>YourCar</LogoText>
-  </LogoContainer>;
+      <LogoText color={props.color || "dark"}>YourCar</LogoText>
+    </LogoContainer>
+  );
 };
 
 export default Logo;
